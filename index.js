@@ -5,6 +5,8 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
+app.use(cors())
+
 const port = 3000;
 
 const storage = multer.memoryStorage();
