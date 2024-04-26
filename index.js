@@ -60,6 +60,28 @@ app.post('/upload', upload.single('image'), async (req, res) => {
   }
 });
 
+app.get('/images', (req, res) => {
+  fs.readFile(DATA_FILE, (err, data) => {
+      if (err) {
+          console.log("Error reading file:", err);
+          if (err.code === 'ENOENT') {
+              res.status(404).json({ message: "No image data found. File not present." });
+          } else {
+              res.status(500).json({ message: "Failed to read image data" });
+          }
+      } else {
+          try {
+              const images = JSON.parse(data);
+              images.reverse(); 
+              res.status(200).json(images);
+          } catch (parseErr) {
+              console.log("Error parsing JSON data:", parseErr);
+              res.status(500).json({ message: "Error parsing image data" });
+          }
+      }
+  });
+});
+
 app.listen(port, () => {
   console.log(`Server running on ${port}`);
 });
