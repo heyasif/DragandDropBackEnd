@@ -3,6 +3,8 @@ const { cloudinary } = require('./config/config');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
+var cors = require('cors')
+
 
 const app = express();
 app.use(cors())
